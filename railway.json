@@ -3,7 +3,8 @@
         "builder": "NIXPACKS",
         "nixpacksConfig": {
             "providers": {
-                "node": "pnpm"
+                "php": "*",
+                "node": "*"
             },
             "phpExtensions": ["pdo_mysql", "mysqli"]
         }
