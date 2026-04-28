@@ -2,10 +2,7 @@
     "build": {
         "builder": "NIXPACKS",
         "nixpacksConfig": {
-            "phpExtensions": ["pdo_mysql", "mysqli"],
-            "node": {
-                "installCmd": "rm -f package-lock.json && npm install"
-            }
+            "phpExtensions": ["pdo_mysql", "mysqli"]
         }
     }
 }
