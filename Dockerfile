@@ -1,17 +1,15 @@
-FROM dunglas/frankenphp:php8.2.30-bookworm
+FROM php:8.2-cli
 
-RUN install-php-extensions \
-    pdo_mysql \
-    mysqli
+RUN docker-php-ext-install pdo_mysql mysqli
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /app
 
 WORKDIR /app
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction || true
-
-RUN chown -R 1000:1000 /app/storage /app/bootstrap/cache
+RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 8000
 
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD php -S 0.0.0.0:8000 -t public
