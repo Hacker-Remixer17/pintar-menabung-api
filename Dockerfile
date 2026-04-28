@@ -1,16 +1,16 @@
-FROM php:8.2-apache
+FROM dunglas/frankenphp:php8.2.30-bookworm
 
-RUN docker-php-ext-install pdo_mysql mysqli
+RUN install-php-extensions \
+    pdo_mysql \
+    mysqli
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY . /app
 
-COPY . /var/www/html/
+WORKDIR /app
 
-WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader --no-interaction || true
 
-RUN composer install --no-dev --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R 1000:1000 /app/storage /app/bootstrap/cache
 
 EXPOSE 8000
 
